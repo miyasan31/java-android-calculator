@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showNumber(String mountValue) {
-        DecimalFormat form = new DecimalFormat("#,##0");
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
         String strDecimal = "";
         String strInt = "";
         String fText = "";
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 strInt = mountValue;
             }
 
-            fText = form.format(Double.parseDouble(strInt)) + strDecimal;
+            fText = decimalFormat.format(Double.parseDouble(strInt)) + strDecimal;
         } else {
             fText = "0";
         }
@@ -116,23 +116,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String doCalc() {
-        BigDecimal bd1 = new BigDecimal(resultValue);
-        BigDecimal bd2 = new BigDecimal(mountValue);
-        BigDecimal result = BigDecimal.ZERO;
+        BigDecimal bigdecimalResult = new BigDecimal(resultValue);
+        BigDecimal bigdecimalMount = new BigDecimal(mountValue);
+        BigDecimal returnResult  = BigDecimal.ZERO;
 
         switch (operator) {
             case R.id.KeyAddition:
-                result = bd1.add(bd2);
+                returnResult  = bigdecimalResult.add(bigdecimalMount);
                 break;
             case R.id.KeySubtraction:
-                result = bd1.subtract(bd2);
+                returnResult  = bigdecimalResult.subtract(bigdecimalMount);
                 break;
             case R.id.KeyMultiple:
-                result = bd1.multiply(bd2);
+                returnResult  = bigdecimalResult.multiply(bigdecimalMount);
                 break;
             case R.id.KeyDivision:
-                if (!bd2.equals(BigDecimal.ZERO)) {
-                    result = bd1.divide(bd2, 2, BigDecimal.ROUND_HALF_UP);
+                if (!bigdecimalMount.equals(BigDecimal.ZERO)) {
+                    returnResult  = bigdecimalResult.divide(bigdecimalMount, 2, BigDecimal.ROUND_HALF_UP);
                 } else {
                     Toast toast = Toast.makeText(this, "0で割れませんよ", Toast.LENGTH_SHORT);
                     toast.show();
@@ -140,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        if (result.toString().indexOf(".") >= 0) {
-            return result.toString().replaceAll("￥￥.0+$|0+$", "");
+        if (returnResult .toString().indexOf(".") >= 0) {
+            return returnResult .toString().replaceAll("￥￥.0+$|0+$", "");
         } else {
-            return result.toString();
+            return returnResult .toString();
         }
     }
 }
