@@ -33,7 +33,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="Copy"
-                android:onClick="handleClickFunction" />
+                android:onClick="onClickFunction" />
 
             <Button
                 android:id="@+id/KeyClear"
@@ -42,7 +42,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="C"
-                android:onClick="handleClickFunction" />
+                android:onClick="onClickFunction" />
 
             <Button
                 android:id="@+id/KeyAllClear"
@@ -51,7 +51,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="AC"
-                android:onClick="handleClickFunction" />
+                android:onClick="onClickFunction" />
 
             <Button
                 android:id="@+id/KeyBackSpace"
@@ -60,7 +60,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="BS"
-                android:onClick="handleClickFunction" />
+                android:onClick="onClickFunction" />
         </TableRow>
 
         <TableRow
@@ -76,7 +76,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="7"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/Key8"
@@ -85,7 +85,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="8"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/Key9"
@@ -94,7 +94,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="9"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/KeyDivision"
@@ -103,7 +103,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="/"
-                android:onClick="handleClickOperator" />
+                android:onClick="onClickOperator" />
         </TableRow>
 
         <TableRow
@@ -119,7 +119,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="4"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/Key5"
@@ -128,7 +128,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="5"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/Key6"
@@ -137,7 +137,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="6"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/KeyMultiple"
@@ -146,7 +146,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="*"
-                android:onClick="handleClickOperator" />
+                android:onClick="onClickOperator" />
         </TableRow>
 
         <TableRow
@@ -162,7 +162,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="1"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/Key2"
@@ -171,7 +171,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="2"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/Key3"
@@ -180,7 +180,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="3"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/KeySubtraction"
@@ -189,7 +189,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="-"
-                android:onClick="handleClickOperator" />
+                android:onClick="onClickOperator" />
         </TableRow>
 
         <TableRow
@@ -205,7 +205,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="0"
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/KeyDot"
@@ -214,7 +214,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="."
-                android:onClick="handleClickNumber" />
+                android:onClick="onClickNumber" />
 
             <Button
                 android:id="@+id/KeyEq"
@@ -223,7 +223,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="="
-                android:onClick="handleClickOperator" />
+                android:onClick="onClickOperator" />
 
             <Button
                 android:id="@+id/KeyAddition"
@@ -232,7 +232,7 @@
                 android:layout_weight="1"
                 android:textSize="24sp"
                 android:text="+"
-                android:onClick="handleClickOperator" />
+                android:onClick="onClickOperator" />
         </TableRow>
     </TableLayout>
 

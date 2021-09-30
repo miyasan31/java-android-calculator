@@ -1,21 +1,23 @@
 package nhs00157.hal.ac.mycalculator;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView DisplayPanel;
-    String mount_value = "";
-    String operator = "";
-    String copy_value = "";
-    String left_side = "";
-    String right_side = "";
-    String result = "";
-    float resultInt;
+    String mountValue = "";
+    String resultValue = "0";
+    String copyValue = "";
+    int operator = 0;
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,125 +26,124 @@ public class MainActivity extends AppCompatActivity {
         DisplayPanel = (TextView)findViewById(R.id.DisplayPanel);
     }
 
-    public void handleClickNumber(View props) {
-        String button_value = (String)((Button) props).getText();
+    public void showNumber(String mountValue) {
+        DecimalFormat form = new DecimalFormat("#,##0");
+        String strDecimal = "";
+        String strInt = "";
+        String fText = "";
 
-        if (button_value.equals(".")) {
-            if (mount_value.indexOf(".") != -1) {
-                return;
-            } else if (mount_value.equals("")) {
-                mount_value = "0.";
-                DisplayPanel.setText("0.");
-                return;
+        if (mountValue.length() > 0) {
+            int decimalPoint = mountValue.indexOf(".");
+            if (decimalPoint > -1) {
+                strDecimal = mountValue.substring(decimalPoint);
+                strInt = mountValue.substring(0, decimalPoint);
             } else {
-                mount_value = mount_value + button_value;
-                DisplayPanel.setText(mount_value);
-                return;
+                strInt = mountValue;
             }
-        }
 
-        if (mount_value.equals("")) {
-            if (button_value.equals("0")) {
-                return;
-            }
-            mount_value = button_value;
-            DisplayPanel.setText(button_value);
-            return;
+            fText = form.format(Double.parseDouble(strInt)) + strDecimal;
+        } else {
+            fText = "0";
         }
-
-        mount_value = mount_value + button_value;
-        DisplayPanel.setText(mount_value);
+        DisplayPanel.setText(fText);
     }
 
-    public void handleClickFunction(View props) {
-        int button_value = props.getId();
-        switch (button_value) {
+    public void onClickNumber(View props) {
+        String buttonValue = (String)((Button) props).getText();
+
+        if (buttonValue.equals(".")) {
+            if (mountValue.length() == 0) {
+                mountValue = "0.";
+            } else if (mountValue.indexOf(".") == -1) {
+                mountValue = mountValue + ".";
+            }
+        } else {
+            mountValue = mountValue + buttonValue;
+        }
+        showNumber(mountValue);
+    }
+
+    public void onClickFunction(View props) {
+        int buttonValue = props.getId();
+
+        switch (buttonValue) {
             case R.id.KeyCopy:
-                copy_value = mount_value;
+                if (count == 0) {
+                    copyValue = resultValue;
+                    count = 1;
+                    return;
+                } else {
+                    mountValue = copyValue;
+                    count = 0;
+                }
                 break;
             case R.id.KeyClear:
-                operator = "";
+                mountValue = "";
                 break;
             case R.id.KeyAllClear:
-                mount_value = "";
-                operator = "";
-                copy_value = "";
-                left_side = "";
-                right_side = "";
-                DisplayPanel.setText("0");
+                mountValue = "";
+                resultValue = "0";
+                operator = 0;
+                count = 0;
                 break;
             case R.id.KeyBackSpace:
-                if (mount_value.length() == 1) {
-                    mount_value = "";
-                    DisplayPanel.setText("0");
-                    break;
+                if (mountValue.length() == 0) {
+                    return;
+                } else {
+                    mountValue = mountValue.substring(0, mountValue.length() - 1);
                 }
-                String new_value = mount_value.substring(0, mount_value.length()-1);
-                mount_value = new_value;
-                DisplayPanel.setText(new_value);
+                break;
+        }
+        showNumber(mountValue);
+    }
+
+    public void onClickOperator(View props) {
+        int buttonValue = props.getId();
+
+        if (operator != 0 && mountValue.length() > 0) {
+            resultValue = doCalc();
+            showNumber(resultValue);
+        } else if (mountValue.length() > 0) {
+            resultValue = mountValue;
+        }
+        mountValue = "";
+
+        if (buttonValue == R.id.KeyEq) {
+            operator = 0;
+        } else {
+            operator = buttonValue;
+        }
+    }
+
+    public String doCalc() {
+        BigDecimal bd1 = new BigDecimal(resultValue);
+        BigDecimal bd2 = new BigDecimal(mountValue);
+        BigDecimal result = BigDecimal.ZERO;
+
+        switch (operator) {
+            case R.id.KeyAddition:
+                result = bd1.add(bd2);
+                break;
+            case R.id.KeySubtraction:
+                result = bd1.subtract(bd2);
+                break;
+            case R.id.KeyMultiple:
+                result = bd1.multiply(bd2);
+                break;
+            case R.id.KeyDivision:
+                if (!bd2.equals(BigDecimal.ZERO)) {
+                    result = bd1.divide(bd2, 2, BigDecimal.ROUND_HALF_UP);
+                } else {
+                    Toast toast = Toast.makeText(this, "0で割れませんよ", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
                 break;
         }
 
-    }
-
-    public void handleClickOperator(View props) {
-        int button_value = props.getId();
-        switch (button_value) {
-            case R.id.KeyDivision:
-                operator = "/";
-                left_side = mount_value;
-                mount_value = "";
-                break;
-            case R.id.KeyMultiple:
-                operator = "*";
-                left_side = mount_value;
-                mount_value = "";
-                break;
-            case R.id.KeySubtraction:
-                operator = "-";
-                left_side = mount_value;
-                mount_value = "";
-                break;
-            case R.id.KeyAddition:
-                operator = "+";
-                left_side = mount_value;
-                mount_value = "";
-                break;
-            case R.id.KeyEq:
-                if (left_side.equals("")) {
-                    break;
-                } else {
-                    right_side = mount_value;
-//                    int left = Integer.parseInt(left_side);
-//                    int right = Integer.parseInt(right_side);
-
-                    float left = Float.parseFloat(left_side);
-                    float right = Float.parseFloat(right_side);
-                    switch (operator) {
-                        case "/":
-                            resultInt = left / right;
-                            break;
-                        case "*":
-                            resultInt = left * right;
-                            break;
-                        case "-":
-                            resultInt = left - right;
-                            break;
-                        case "+":
-                            resultInt = left + right;
-                            break;
-                    }
-                    result = new Float(resultInt).toString();
-                    DisplayPanel.setText(result);
-
-                    mount_value = "";
-                    operator = "";
-                    copy_value = "";
-                    left_side = "";
-                    right_side = "";
-                    result = "";
-                    break;
-                }
+        if (result.toString().indexOf(".") >= 0) {
+            return result.toString().replaceAll("￥￥.0+$|0+$", "");
+        } else {
+            return result.toString();
         }
     }
 }
